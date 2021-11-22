@@ -1,0 +1,32 @@
+﻿@model AfricaRentCar.Models.panier
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>panier</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_jours)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.voiture.url_image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_jours)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.voiture.url_image)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

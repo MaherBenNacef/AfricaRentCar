@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="/assets/css/Contact-Form-Clean.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+<link rel="stylesheet" href="/assets/css/Login-Form-Dark.css">
+<link rel="stylesheet" href="/assets/css/Pretty-Footer.css">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox-plus-jquery.min.js"></script>
+@if (ViewBag.msg != null)
+{
+    <div class="alert alert-success">@ViewBag.msg</div>
+}
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    <div align="center">
+        <h2>Send Mail</h2><br /><br /><br />
+        <img src="https://cdn4.iconfinder.com/data/icons/managers-9/307/Untitled-4-512.png" alt="Avatar" class="avatar"><br />
+        <input type="text" name="usermail" class="form-control" placeholder="Email" /><br />
+        <input type="text" name="sujet" class="form-control" placeholder="objet" /><br />
+
+        <textarea id="subject" name="objet" placeholder="Write something.." style="height:200px"></textarea><br />
+
+        <button class="btn btn-success" type="submit"><i class="fa fa-envelope"> Send Mail</i></button>
+
+
+
+    </div>
+}
+<style>
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+
+
+    label {
+        width: 100%;
+    }
+
+    img.avatar {
+        width: 20%;
+        border-radius: 30%;
+    }
+</style>
+
+

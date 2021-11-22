@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AfricaRentCar.Models.facture>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<button class="btn btn-outline-success"> @Html.ActionLink("Generate Bill", "calculFacture")</button>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.somme)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.user.UserName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.somme)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.id })
+        <button class="btn btn-warning">@Html.ActionLink("Pay", "Pay", new { id = item.id })</button>
+    </td>
+</tr>
+}
+
+</table>

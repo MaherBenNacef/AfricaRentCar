@@ -19,7 +19,26 @@ namespace AfricaRentCar.Controllers
         // GET: voitures
         public ActionResult Index()
         {
-            return View(db.voitures.ToList());
+            voiture voiture;
+            foreach (var item in db.paniers.ToList())
+            {
+                if (item.date_location.AddDays(item.nombre_jours) < DateTime.Now)
+                {
+                    voiture = db.voitures.Find(item.voiture.id);
+                    voiture.disponibilite = true;
+                    db.Entry(voiture).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            List<voiture> voitures = new List<voiture>();
+            foreach (var item in db.voitures.ToList())
+            {
+                if (item.disponibilite)
+                {
+                    voitures.Add(item);
+                }
+            }
+            return View(voitures);
         }
 
         // GET: voitures/Details/5
@@ -133,6 +152,121 @@ namespace AfricaRentCar.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult add(int? id)
+        {
+            var produit = db.voitures.Find(id);
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            if (user.EmailConfirmed)
+            {
+                panier ligneCommande = new panier();
+                ligneCommande.user = db.Users.Find(userId);
+                ligneCommande.voiture = db.voitures.Find(id);
+                produit.disponibilite =false;
+                ligneCommande.nombre_jours = 1;
+                db.paniers.Add(ligneCommande);
+                db.Entry(produit).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.messager = "Car add to cart successfully !";
+                return RedirectToAction("Index", "Home");
+           }
+            else
+            {
+                return View("ErrorConfirmation");
+            }
+
+
+
+        }
+        [Authorize(Roles = "responsable")]
+        public ActionResult stat()
+        {
+            int nbVente = 0;
+            var userId = User.Identity.GetUserId();
+            var nbProduits = db.voitures.Count();
+            //int nbMyProduct = 0;
+            List<panier> ligneCommandes = db.paniers.Include(l => l.user).Include(l => l.voiture).ToList();
+            List<voiture> produits = db.voitures.Include(l => l.user_Id).ToList();
+            List<voiture> produitsResponsable = new List<voiture>();
+            foreach (var item in produits)
+            {
+                if (item.user_Id != null)
+                {
+                    if (item.user_Id.Id == userId)
+                    {
+                        produitsResponsable.Add(item);
+                    }
+                }
+            }
+            foreach (var item in ligneCommandes)
+            {
+                foreach (var i in produitsResponsable)
+                {
+                    if (item.voiture.id == i.id)
+                    {
+                        nbVente += 1;
+                    }
+                }
+            }
+            ViewBag.nbMyProduct = produitsResponsable.Count();
+            ViewBag.nbProduits = nbProduits;
+            ViewBag.nbVente = nbVente;
+
+            return View();
+
+        }
+        [Authorize(Roles = "responsable")]
+        public ActionResult MyCars()
+        {
+            List<voiture> produits = db.voitures.Include(l => l.user_Id).ToList();
+            List<voiture> mesProduits = new List<voiture>();
+            var userId = User.Identity.GetUserId();
+            foreach (var item in produits)
+            {
+                if (item.user_Id != null)
+                {
+                    if (item.user_Id.Id.Equals(userId))
+                    {
+                        mesProduits.Add(item);
+                    }
+                }
+
+            }
+            return View(mesProduits);
+        }
+        public ActionResult x4()
+        {
+            List<voiture> voitures = new List<voiture>();
+            foreach (voiture item in db.voitures.ToList())
+            {
+                if (item.type.Equals("4wd"))
+                    voitures.Add(item);
+
+            }
+            return View(voitures.ToList());
+        }
+        public ActionResult pickup()
+        {
+            List<voiture> voitures = new List<voiture>();
+            foreach (voiture item in db.voitures.ToList())
+            {
+                if (item.type.Equals("pickup"))
+                    voitures.Add(item);
+
+            }
+            return View(voitures.ToList());
+        }
+        public ActionResult x2()
+        {
+            List<voiture> voitures = new List<voiture>();
+            foreach (voiture item in db.voitures.ToList())
+            {
+                if (item.type.Equals("2wd"))
+                    voitures.Add(item);
+
+            }
+            return View(voitures.ToList());
         }
     }
 }

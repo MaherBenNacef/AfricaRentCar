@@ -4,8 +4,24 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="/assets/css/Contact-Form-Clean.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+<link rel="stylesheet" href="/assets/css/Login-Form-Dark.css">
+<link rel="stylesheet" href="/assets/css/Pretty-Footer.css">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox-plus-jquery.min.js"></script>
+<br />
+<br />
+<br />
+
+<div class="row" id="register">
     <div class="col-md-8">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -51,13 +67,14 @@
             }
         </section>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<style>
+    h4 {
+        text-align: center;
+    }
+</style>

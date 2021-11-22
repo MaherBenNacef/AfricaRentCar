@@ -1,0 +1,16 @@
+﻿@using AfricaRentCar.Models
+@{
+    ViewBag.Title = "Statistique";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Statistique</h2>
+
+@{
+    var myChart = new Chart(width: 600, height: 400)
+       .AddTitle("Cars Rented")
+       .AddSeries(chartType: "column",
+          xValue: new[] { "Number of Cars", "Number of rented cars", "My Cars" },
+          yValues: new[] { ViewBag.nbProduits, ViewBag.nbVente, ViewBag.nbMyProduct })
+       .Write();
+}
