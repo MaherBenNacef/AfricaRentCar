@@ -58,11 +58,11 @@ namespace AfricaRentCar
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "958186900200-q20df73ca74vf95j89qt1s123n600p64.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

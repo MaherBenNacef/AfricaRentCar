@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<AfricaRentCar.Models.panier>
 
-@{
-    ViewBag.Title = "Index";
-}
+
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th width="10%">
@@ -50,9 +46,9 @@
                     @Html.DisplayFor(modelItem => item.voiture.description)
                 </td>
                 <td>
-                    <button class="btn btn-warning">@Html.ActionLink("Edit", "Edit", new { id = item.id })<i class="glyphicon glyphicon-pencil"></i></button><br />
-                    <button class="btn btn-info">@Html.ActionLink("Details", "Details", new { id = item.id })<i class="glyphicon glyphicon-plus"></i></button><br />
-                    <button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { id = item.id })<i class="glyphicon glyphicon-trash"></i></button><br />
+                    <button class="btn btn-warning">@Html.ActionLink("Edit", "Edit", new { id = item.id })</button>
+                    <button class="btn btn-info">@Html.ActionLink("Details", "Details", new { id = item.id })</button>
+                    <button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { id = item.id })</button>
                 </td>
             </tr>
         }

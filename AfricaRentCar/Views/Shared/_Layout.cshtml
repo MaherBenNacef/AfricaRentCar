@@ -26,7 +26,6 @@
     <title>@ViewBag.Title - Africa Rent Car</title>
     @Styles.Render("~/assets/css")
     @Scripts.Render("~/assets/js")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -41,16 +40,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.IsInRole("responsable"))
                     {
                         <li>@Html.ActionLink("My Cars", "MyCars", "voitures")</li>
                         <li><a href="https://localhost:44336/voitures/stat" target="_blank">Statistics </a></li>
                     }
-                    @if (User.IsInRole("admin"))
-                    {
-                        <li>@Html.ActionLink("Cars List", "Index", "voitures")</li>
-                    }
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
+                    <li>@Html.ActionLink("Cars List", "Index", "voitures")</li>
+
+
                     @if (User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Admin Space ", "AdminLayout", "Admin")</li>
@@ -60,25 +59,19 @@
                         <li>@Html.ActionLink("Bill", "Index", "factures")</li>
                         <li>@Html.ActionLink("panier", "Index", "paniers")</li>
                     }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <li>@Html.ActionLink("Change password", "ChangePassword", "Manage")</li>
+
+                    }
+
                     @if (!User.IsInRole("responsable") && !User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Contact", "Index", "Mail")</li>
                     }
-                    <li class="dropdown-content">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Add phone number", "AddPhoneNumber", "Manage")</li>
-                            <li>@Html.ActionLink("Change password", "ChangePassword", "Manage")</li>
-                            <li>@Html.ActionLink("Reset password", "ChangePassword", "Manage")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-content">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Shop<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Card", "Index", "LigneCommandes")</li>
-                            <li>@Html.ActionLink("Bill", "Index", "factures")</li>
-                        </ul>
-                    </li>
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

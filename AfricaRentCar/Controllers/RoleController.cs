@@ -16,18 +16,20 @@ namespace AfricaRentCar.Controllers
             {
                 context = new ApplicationDbContext();
             }
-
+            [Authorize(Roles = "admin")]
             public ActionResult Index()
             {
                 var Roles = context.Roles.ToList();
                 return View(Roles);
             }
+            [Authorize(Roles = "admin")]
             public ActionResult Create()
             {
                 var Role = new IdentityRole();
                 return View(Role);
             }
             [HttpPost]
+            [Authorize(Roles = "admin")]
             public ActionResult Create(IdentityRole Role)
             {
                 context.Roles.Add(Role);

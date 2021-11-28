@@ -20,9 +20,9 @@ namespace AfricaRentCar.Controllers
         public ActionResult Index()
         {
             voiture voiture;
-            foreach (var item in db.paniers.ToList())
+            foreach (var item in db.paniers.Include(c=>c.voiture).ToList())
             {
-                if (item.date_location.AddDays(item.nombre_jours) < DateTime.Now)
+                if ((item.date_location.AddDays(item.nombre_jours).CompareTo(DateTime.Now))>=0)
                 {
                     voiture = db.voitures.Find(item.voiture.id);
                     voiture.disponibilite = true;
@@ -56,6 +56,7 @@ namespace AfricaRentCar.Controllers
             return View(voiture);
         }
 
+        [Authorize(Roles = "responsable , admin")]
         // GET: voitures/Create
         public ActionResult Create()
         {
@@ -65,6 +66,7 @@ namespace AfricaRentCar.Controllers
         // POST: voitures/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "responsable , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(voiture voiture)
@@ -87,7 +89,7 @@ namespace AfricaRentCar.Controllers
 
             return View(voiture);
         }
-
+        [Authorize(Roles = "responsable , admin")]
         // GET: voitures/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -106,6 +108,7 @@ namespace AfricaRentCar.Controllers
         // POST: voitures/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "responsable , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,marque,modele,type,puissance_fiscale,puissance_chdin,energie,boite_vitesse,nombre_rapport,nombre_cylindres,disponibilite,prix,image,url_image,description")] voiture voiture)
@@ -118,7 +121,7 @@ namespace AfricaRentCar.Controllers
             }
             return View(voiture);
         }
-
+        [Authorize(Roles = "responsable , admin")]
         // GET: voitures/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -158,22 +161,30 @@ namespace AfricaRentCar.Controllers
             var produit = db.voitures.Find(id);
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
-            if (user.EmailConfirmed)
+            if (User.Identity.IsAuthenticated)
             {
-                panier ligneCommande = new panier();
-                ligneCommande.user = db.Users.Find(userId);
-                ligneCommande.voiture = db.voitures.Find(id);
-                produit.disponibilite =false;
-                ligneCommande.nombre_jours = 1;
-                db.paniers.Add(ligneCommande);
-                db.Entry(produit).State = EntityState.Modified;
-                db.SaveChanges();
-                ViewBag.messager = "Car add to cart successfully !";
-                return RedirectToAction("Index", "Home");
-           }
+                if (user.EmailConfirmed)
+                {
+                    panier ligneCommande = new panier();
+                    ligneCommande.user = db.Users.Find(userId);
+                    ligneCommande.voiture = db.voitures.Find(id);
+                    produit.disponibilite = false;
+                    ligneCommande.nombre_jours = 1;
+                    db.paniers.Add(ligneCommande);
+                    db.Entry(produit).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ViewBag.messager = "Car add to cart successfully !";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View("ErrorConfirmation");
+                }
+            }
+
             else
             {
-                return View("ErrorConfirmation");
+                return View("CreateAccount");
             }
 
 
@@ -235,38 +246,8 @@ namespace AfricaRentCar.Controllers
             }
             return View(mesProduits);
         }
-        public ActionResult x4()
-        {
-            List<voiture> voitures = new List<voiture>();
-            foreach (voiture item in db.voitures.ToList())
-            {
-                if (item.type.Equals("4wd"))
-                    voitures.Add(item);
-
-            }
-            return View(voitures.ToList());
-        }
-        public ActionResult pickup()
-        {
-            List<voiture> voitures = new List<voiture>();
-            foreach (voiture item in db.voitures.ToList())
-            {
-                if (item.type.Equals("pickup"))
-                    voitures.Add(item);
-
-            }
-            return View(voitures.ToList());
-        }
-        public ActionResult x2()
-        {
-            List<voiture> voitures = new List<voiture>();
-            foreach (voiture item in db.voitures.ToList())
-            {
-                if (item.type.Equals("2wd"))
-                    voitures.Add(item);
-
-            }
-            return View(voitures.ToList());
-        }
+     
+   
+   
     }
 }

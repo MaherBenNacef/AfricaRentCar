@@ -16,6 +16,7 @@ namespace AfricaRentCar.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: paniers
+        [Authorize(Roles = "client")]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -31,13 +32,14 @@ namespace AfricaRentCar.Controllers
             return View(ligneCommandesUser);
         }
         // GET: paniers/Details/5
+        [Authorize(Roles = "client")]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            panier panier = db.paniers.Find(id);
+            panier panier = db.paniers.Include(c=>c.voiture).First(a=>a.id==id);
             if (panier == null)
             {
                 return HttpNotFound();
@@ -69,6 +71,7 @@ namespace AfricaRentCar.Controllers
         }
 
         // GET: paniers/Edit/5
+        [Authorize(Roles = "client")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,6 +91,7 @@ namespace AfricaRentCar.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "client")]
         public ActionResult Edit([Bind(Include = "id,nombre_jours")] panier panier)
         {
             if (ModelState.IsValid)
@@ -100,6 +104,7 @@ namespace AfricaRentCar.Controllers
         }
 
         // GET: paniers/Delete/5
+        [Authorize(Roles = "client")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,6 +122,7 @@ namespace AfricaRentCar.Controllers
         // POST: paniers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "client")]
         public ActionResult DeleteConfirmed(int id)
         {
             panier panier = db.paniers.Find(id);

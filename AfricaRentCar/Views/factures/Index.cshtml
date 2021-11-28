@@ -6,9 +6,7 @@
 
 <h2>Index</h2>
 <button class="btn btn-outline-success"> @Html.ActionLink("Generate Bill", "calculFacture")</button>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -35,11 +33,11 @@
         @Html.DisplayFor(modelItem => item.somme)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.id })
+       
+        <button class="btn btn-info">@Html.ActionLink("Details", "Details", new { id = item.id }) </button>
+        <button class="btn btn-danger"> @Html.ActionLink("Delete", "Delete", new { id = item.id })</button>
         <button class="btn btn-warning">@Html.ActionLink("Pay", "Pay", new { id = item.id })</button>
-    </td>
+</td>
 </tr>
 }
 

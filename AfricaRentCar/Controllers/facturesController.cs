@@ -16,6 +16,7 @@ namespace AfricaRentCar.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: factures
+        [Authorize(Roles = "client")]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -24,6 +25,7 @@ namespace AfricaRentCar.Controllers
                .ToList();
             return View(fact);
         }
+        [Authorize(Roles = "client")]
         public ActionResult calculFacture()
         {
             facture facture = new facture();
@@ -58,6 +60,7 @@ namespace AfricaRentCar.Controllers
 
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "client")]
         public ActionResult Pay(int? id)
         {
             if (id == null)
@@ -77,6 +80,7 @@ namespace AfricaRentCar.Controllers
         }
 
         // GET: factures/Details/5
+        [Authorize(Roles = "client")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -115,6 +119,7 @@ namespace AfricaRentCar.Controllers
         }
 
         // GET: factures/Edit/5
+        [Authorize(Roles = "client")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -134,6 +139,7 @@ namespace AfricaRentCar.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "client")]
         public ActionResult Edit([Bind(Include = "id,date,somme")] facture facture)
         {
             if (ModelState.IsValid)
@@ -146,6 +152,7 @@ namespace AfricaRentCar.Controllers
         }
 
         // GET: factures/Delete/5
+        [Authorize(Roles = "client")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -163,6 +170,7 @@ namespace AfricaRentCar.Controllers
         // POST: factures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "client")]
         public ActionResult DeleteConfirmed(int id)
         {
             facture facture = db.factures.Find(id);

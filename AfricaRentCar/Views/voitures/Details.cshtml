@@ -3,7 +3,16 @@
 @{
     ViewBag.Title = "Details";
 }
-
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="/assets/css/Contact-Form-Clean.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+<link rel="stylesheet" href="/assets/css/Login-Form-Dark.css">
+<link rel="stylesheet" href="/assets/css/Pretty-Footer.css">
+<link rel="stylesheet" href="/assets/css/styles.css">
 <h2>Details</h2>
 
 <div>
@@ -111,7 +120,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.url_image)
+            <img src="@Html.DisplayFor(model => model.url_image)" width="200" height="200" />
         </dd>
 
         <dt>
@@ -125,6 +134,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @if (User.IsInRole("admin") || User.IsInRole("responsable"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id })
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

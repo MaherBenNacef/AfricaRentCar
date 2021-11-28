@@ -11,18 +11,33 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.nombre_jours)
+            Car Brand
         </dt>
+        <dd>
+            @Html.DisplayFor(model => model.voiture.marque)
+        </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.voiture.url_image)
+            Model
         </dt>
-
+        <dd>
+            @Html.DisplayFor(model => model.voiture.modele)
+        </dd>
+        <br />
+        <dt>
+            Number of days
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.nombre_jours)
         </dd>
+        <br />
+        <dt>
+            Car image
+        </dt>
         <dd>
-            @Html.DisplayFor(model => model.voiture.url_image)
+            <img src="@Html.DisplayFor(model => model.voiture.url_image)" width="200" height="200" />
         </dd>
+
 
     </dl>
 </div>
